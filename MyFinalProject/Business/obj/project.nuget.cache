@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "r/f0LO0JIC//rPEin3yMO4h34XaG/HwD5EoF7b5UbIp5ujEtKKSethXbMHVrrNRFltD5YjQm7eiqXEPb7OZ28A==",
+  "dgSpecHash": "cjJSAG7aPJ8sYWHIg0alwMuXh6vG79dUBE+6cjov8+d5RfxicZEeV/MlFjkboYjEqtC8HCF9qEV7lDyt7CIjQg==",
   "success": true,
   "projectFilePath": "C:\\Users\\ridva\\source\\repos\\MyFinalProject\\Business\\Business.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ridva\\.nuget\\packages\\autofac\\6.2.0\\autofac.6.2.0.nupkg.sha512",
+    "C:\\Users\\ridva\\.nuget\\packages\\autofac.extensions.dependencyinjection\\7.1.0\\autofac.extensions.dependencyinjection.7.1.0.nupkg.sha512",
     "C:\\Users\\ridva\\.nuget\\packages\\autofac.extras.dynamicproxy\\6.0.0\\autofac.extras.dynamicproxy.6.0.0.nupkg.sha512",
     "C:\\Users\\ridva\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
+    "C:\\Users\\ridva\\.nuget\\packages\\fluentvalidation\\10.3.3\\fluentvalidation.10.3.3.nupkg.sha512",
     "C:\\Users\\ridva\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\ridva\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
     "C:\\Users\\ridva\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\2.0.1\\microsoft.data.sqlclient.sni.runtime.2.0.1.nupkg.sha512",
