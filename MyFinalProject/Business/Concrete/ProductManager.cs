@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,19 +21,27 @@ namespace Business.Concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
-
-        public ProductManager(IProductDal productDal)
+        ICategoryService _categoryService;
+        public ProductManager(IProductDal productDal,ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
 
-        [ValidationAspect(typeof(ProductValidator))]
+
+       // [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
+           IResult result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName),
+                CheckIfProductCategoryCorrect(product.CategoryId), CheckIfCategoryLimitExceded());
 
-            
-            _productDal.Add(product);
-            return new SuccessResult("Ürün Eklendi");
+            if (result!=null)
+            {
+
+            }
+                 _productDal.Add(product);
+                 return new SuccessResult("Ürün Eklendi");
+                              
         }
 
         public IDataResult<List<Product>> GetAll()
@@ -61,6 +71,46 @@ namespace Business.Concrete
         public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetail());
+        }
+
+        public IResult Update(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IResult CheckIfProductCategoryCorrect(int categoryId)
+        {
+            //Bir kategoriye en fazla 15 ürün eklenmesi için oluşturuldu
+            //select count(*) from product where categoryId=1
+            var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
+            if (result >= 15)
+            {
+                return new ErrorResult("Ürün sınırı aşıldı");
+            }
+            return new SuccessResult();
+        }
+        private IResult CheckIfProductNameExists(string productName)
+        {
+            //Veritabanında aynı isimde ürün olmaması için oluşturuldu
+            //select count(*) from product where categoryId=1
+            var result = _productDal.GetAll(p => p.ProductName == productName).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfCategoryLimitExceded()
+        {
+            //select count(*) from product where categoryId=1
+            //Kategori sayısı 15den fazla olunca kategori eklememek için kullanıyoruz
+            var result = _categoryService.GetAll();
+            if (result.Data.Count > 15)
+            {
+                return new ErrorResult(Messages.CategoryLimitExceded);
+            }
+            return new SuccessResult();
         }
     }
 }
